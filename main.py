@@ -1,4 +1,5 @@
 from tokens import TOKEN
+import leaderboard
 import discord
 import json
 import re
@@ -10,12 +11,8 @@ t10:dict = {}
 try: open('db.json', 'x')
 except: 
     with open('db.json', 'r') as f:
-        db:dict = json.loads(f.read())
+        db:dict = json.load(f)
 
-try: open('t10.json', 'x')
-except: 
-    with open('t10.json', 'r') as f:
-        t10:dict = json.loads(f.read())
 
 @client.event
 async def on_ready():
@@ -25,10 +22,10 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    leaderboard:str = ""
-    for i in db:
-        leaderboard += f"{i}: {db[i]}\n"
-    if message.content.strip() == '!leaderboard': await message.channel.send('```'+leaderboard+'```')
+    
+    if message.content.strip() == '!leaderboard': 
+        await message.channel.send('```'+leaderboard.export()+'```')
+        return
 
     words:list = message.content.strip().split(' ')
 
@@ -41,6 +38,7 @@ async def on_message(message):
             db[word] = 1
     with open('db.json', 'w') as f:
         f.write(json.dumps(db))
+    leaderboard.update()
     print(message.content)
     print(db)
 
