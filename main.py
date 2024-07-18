@@ -7,7 +7,6 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 db:dict = {}
-t10:dict = {}
 try: open('db.json', 'x')
 except: 
     with open('db.json', 'r') as f:
@@ -22,11 +21,9 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    
-    if message.content.strip() == '!leaderboard': 
-        await message.channel.send('```'+leaderboard.export()+'```')
+    if  '!leaderboard' in message.content.strip() and message.content.strip()[0] == '!': 
+        await message.channel.send('```'+leaderboard.export(int(message.content[12:len(message.content)]))+'```')
         return
-
     words:list = message.content.strip().split(' ')
 
     for word in words: word.splitlines()
@@ -38,7 +35,6 @@ async def on_message(message):
             db[word] = 1
     with open('db.json', 'w') as f:
         f.write(json.dumps(db))
-    leaderboard.update()
     print(message.content)
     print(db)
 
