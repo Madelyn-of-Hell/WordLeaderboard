@@ -4,15 +4,7 @@ def update():
     with open('db.json', 'r') as f:
         db:dict = json.loads(f.read())
 
-    try: 
-        open('t10.json', 'x')
-        with open('t10.json', 'w') as f:
-            f.write("{\"10\":{\"name\": \"\", \"count\": 0},\"9\":{\"name\": \"\", \"count\": 0},\"8\":{\"name\": \"\", \"count\": 0},\"7\":{\"name\": \"\", \"count\": 0},\"6\":{\"name\": \"\", \"count\": 0},\"5\":{\"name\": \"\", \"count\": 0},\"4\":{\"name\": \"\", \"count\": 0},\"3\":{\"name\": \"\", \"count\": 0},\"2\":{\"name\": \"\", \"count\": 0},\"1\":{\"name\": \"\", \"count\": 0}, \"debug\": {\"count\": 9999999, \"name\": \"DEBUG\"}}")
-    except: 
-        pass
-    with open('t10.json', 'r') as f:
-        t10:dict = json.loads(f.read())
-    
+    t10:dict = {"10":{"name": "", "count": 0},"9":{"name": "", "count": 0},"8":{"name": "", "count": 0},"7":{"name": "", "count": 0},"6":{"name": "", "count": 0},"5":{"name": "", "count": 0},"4":{"name": "", "count": 0},"3":{"name": "", "count": 0},"2":{"name": "", "count": 0},"1":{"name": "", "count": 0}, "debug": {"count": 9999999, "name": "DEBUG"}}
     for word in db: 
         if db[word] > t10["10"]["count"]:
             stop = False
@@ -38,5 +30,5 @@ def export() -> str:
     leaderboard:str = ""
     
     for i in range(1,11):
-        leaderboard += f"{(' ' if i < 10 else '') + str(i)}: {t10[str(i)]['name']} - {t10[str(i)]['count']}\n"
+        leaderboard += f"{(' ' if i < 10 else '') + str(i)}: {t10[str(i)]['name']} - {t10[str(i)]['count']}n"
     return leaderboard
