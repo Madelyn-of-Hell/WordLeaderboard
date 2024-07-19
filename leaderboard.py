@@ -6,7 +6,7 @@ def update(length:int) -> dict:
 
     t10:dict = {"10":{"name": "", "count": 0},"9":{"name": "", "count": 0},"8":{"name": "", "count": 0},"7":{"name": "", "count": 0},"6":{"name": "", "count": 0},"5":{"name": "", "count": 0},"4":{"name": "", "count": 0},"3":{"name": "", "count": 0},"2":{"name": "", "count": 0},"1":{"name": "", "count": 0}, "debug": {"count": 9999999, "name": "DEBUG"}}
     for word in db: 
-        if len(word) >= length:
+        if len(word) >= length if length > 0 else 1:
             if db[word] > t10["10"]["count"]:
                 stop = False
                 for place in range(10,0, -1):
