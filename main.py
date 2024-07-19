@@ -7,6 +7,8 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 db:dict = {}
+mabdie = discord.User
+
 try: open('db.json', 'x')
 except: 
     with open('db.json', 'r') as f:
@@ -22,8 +24,11 @@ async def on_message(message):
     if message.author == client.user:
         return
     if  '!leaderboard' in message.content.strip() and message.content.strip()[0] == '!': 
-        await message.channel.send('```'+leaderboard.export(int(message.content[12:len(message.content)]))+'```')
+        await message.channel.send('```'+leaderboard.export(int(message.content[12:]))+'```')
         return
+    if  '!suggest' in message.content.strip() and message.content.strip()[0] == '!': 
+        await  suggest('566579790556037140', message.content[8:])
+
     words:list = message.content.strip().split(' ')
 
     for word in words: word.splitlines()
@@ -38,6 +43,9 @@ async def on_message(message):
     print(message.content)
     print(db)
 
+async def suggest(user: str, content):
+    user = await client.fetch_user(user)
+    await user.send(content)
 
     
 

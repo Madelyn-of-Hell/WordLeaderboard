@@ -26,7 +26,7 @@ def export(length:int) -> str:
     t10:dict = update(length)
 
     leaderboard:str = ""
-    
+
     for i in range(1,11):
         leaderboard += f"{(' ' if i < 10 else '') + str(i)}: {t10[str(i)]['name']} - {t10[str(i)]['count']}\n"
     return leaderboard
