@@ -30,3 +30,9 @@ def export(length:int) -> str:
     for i in range(1,11):
         leaderboard += f"{(' ' if i < 10 else '') + str(i)}: {t10[str(i)]['name']} - {t10[str(i)]['count']}\n"
     return leaderboard
+
+async def index(query:str) -> int:
+    with open('db.json', 'r') as f:
+        db:dict = json.loads(f.read())
+    try: return db[query]
+    except: return 0

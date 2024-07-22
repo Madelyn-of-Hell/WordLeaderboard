@@ -1,5 +1,6 @@
 from tokens import TOKEN
 import leaderboard
+import asyncio
 import discord
 import json
 import re
@@ -27,7 +28,9 @@ async def on_message(message):
         await message.channel.send('```'+leaderboard.export(int(message.content[12:]))+'```')
         return
     if  '!suggest' in message.content.strip() and message.content.strip()[0] == '!': 
-        await  suggest('566579790556037140', message.content[8:])
+        await suggest('566579790556037140', message.content[8:])
+    if  '!index' in message.content.strip() and message.content.strip()[0] == '!': 
+        await message.channel.send('`'+message.content[6:].strip() +':\t' + str(await leaderboard.index(message.content[6:].strip()))+'`')
 
     words:list = message.content.strip().split(' ')
 
@@ -40,14 +43,10 @@ async def on_message(message):
             db[word] = 1
     with open('db.json', 'w') as f:
         f.write(json.dumps(db))
-    print(message.content)
-    print(db)
 
 async def suggest(user: str, content):
     user = await client.fetch_user(user)
     await user.send(content)
-
-    
 
 
 
