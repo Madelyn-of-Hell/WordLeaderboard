@@ -29,8 +29,10 @@ async def on_message(message):
         return
     if  '!suggest' in message.content.strip() and message.content.strip()[0] == '!': 
         await suggest('566579790556037140', message.content[8:])
+        return
     if  '!index' in message.content.strip() and message.content.strip()[0] == '!': 
         await message.channel.send('`'+message.content[6:].strip() +':\t' + str(await leaderboard.index(message.content[6:].strip()))+'`')
+        return
 
     words:list = message.content.strip().split(' ')
 
