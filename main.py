@@ -33,6 +33,14 @@ async def on_message(message):
     if  '!index' in message.content.strip() and message.content.strip()[0] == '!': 
         await message.channel.send('`'+message.content[6:].strip() +':\t' + str(await leaderboard.index(message.content[6:].strip()))+'`')
         return
+    if  '!reset' in message.content.strip() and message.content.strip()[0] == '!': 
+        if message.author == await client.fetch_user('566579790556037140'):
+            db[message.content.strip()[7:]] = 0
+            await message.channel.send('`'+message.content.strip()[7:] +' has been reset to 0!''`')
+        else:
+            await message.channel.send(f'`{message.author} has no admin permissions. BEGONE, HEATHEN!`')
+            
+        return
 
     words:list = message.content.strip().split(' ')
 
