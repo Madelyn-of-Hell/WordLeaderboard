@@ -25,7 +25,9 @@ async def on_message(message):
     if message.author == client.user:
         return
     if  '!leaderboard' in message.content.strip() and message.content.strip()[0] == '!': 
-        await message.channel.send('```'+leaderboard.export(int(message.content[12:]))+'```')
+        try: min = int(message.content[12:])
+        except: min = 0
+        await message.channel.send('```'+leaderboard.export(min)+'```')
         return
     if  '!suggest' in message.content.strip() and message.content.strip()[0] == '!': 
         await suggest('566579790556037140', message.content[8:])
@@ -39,7 +41,7 @@ async def on_message(message):
             await message.channel.send('`'+message.content.strip()[7:] +' has been reset to 0!''`')
         else:
             await message.channel.send(f'`{message.author} has no admin permissions. BEGONE, HEATHEN!`')
-            
+            discord.Embed
         return
 
     words:list = message.content.strip().split(' ')
