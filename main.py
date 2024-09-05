@@ -1,5 +1,6 @@
 from tokens import TOKEN
 import leaderboard
+# import matplotlib
 import asyncio
 import discord
 import json
@@ -9,7 +10,7 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 db:dict = {}
 mabdie = discord.User
-
+tree = discord.app_commands.CommandTree(client)
 try: open('db.json', 'x')
 except: 
     with open('db.json', 'r') as f:
@@ -18,6 +19,7 @@ except:
 
 @client.event
 async def on_ready():
+    await tree.sync()
     print('connected and loaded!')
 
 @client.event
@@ -60,7 +62,12 @@ async def suggest(user: str, content):
     user = await client.fetch_user(user)
     await user.send(content)
 
-
-
+@tree.command(
+    name="leaderboard",
+    description="Displays the leaderboard as an embed."
+    )
+async def leaderboard_command(interaction):
+    embeds = leaderboard.export(1)
+    await interaction.response.send_message(embed=embeds)
 
 client.run(TOKEN)
