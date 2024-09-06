@@ -65,6 +65,8 @@ async def leaderboard_command(interaction):
 async def reset_command(interaction, target:str):
     if interaction.user.id == 566579790556037140:
         db[target] = 0
+        with open('db.json', 'w') as f:
+            f.write(json.dumps(db))
         await interaction.response.send_message('`'+target +' has been reset to 0!''`')
     else:
         await interaction.response.send_message(f'`{interaction.user.capitalize()} has no admin permissions. BEGONE, HEATHEN!`')
