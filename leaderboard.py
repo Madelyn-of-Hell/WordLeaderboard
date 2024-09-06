@@ -31,20 +31,21 @@ def export(length:int) -> Embed:
     #     leaderboard += f"{(' ' if i < 10 else '') + str(i)}: {t10[str(i)]['name']} - {t10[str(i)]['count']}\n"
     # return leaderboard
     embed = Embed(title="Leaderboard", color=0xff0000)
-    embed.add_field(name=f"1. \t {t10['1'] ['name']} - {t10['1'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"3. \t {t10['2'] ['name']} - {t10['2'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"4. \t {t10['3'] ['name']} - {t10['3'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"5. \t {t10['4'] ['name']} - {t10['4'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"6. \t {t10['5'] ['name']} - {t10['5'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"7. \t {t10['6'] ['name']} - {t10['6'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"8. \t {t10['7'] ['name']} - {t10['7'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"9. \t {t10['8'] ['name']} - {t10['8'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"9. \t {t10['9'] ['name']} - {t10['9'] ['count']}",value='', inline=False)
-    embed.add_field(name=f"10. \t{t10['10']['name']} - {t10['10']['count']}",value='', inline=False)
+    embed.add_field(name='', value=f"1. \t {t10['1'] ['name']} - {t10['1'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"3. \t {t10['2'] ['name']} - {t10['2'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"4. \t {t10['3'] ['name']} - {t10['3'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"5. \t {t10['4'] ['name']} - {t10['4'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"6. \t {t10['5'] ['name']} - {t10['5'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"7. \t {t10['6'] ['name']} - {t10['6'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"8. \t {t10['7'] ['name']} - {t10['7'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"9. \t {t10['8'] ['name']} - {t10['8'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"9. \t {t10['9'] ['name']} - {t10['9'] ['count']}", inline=False)
+    embed.add_field(name='', value=f"10. \t{t10['10']['name']} - {t10['10']['count']}", inline=False)
     return embed
 
-async def index(query:str) -> int:
+async def index(query:str) -> Embed:
     with open('db.json', 'r') as f:
         db:dict = json.loads(f.read())
-    try: return db[query]
-    except: return 0
+    embed = Embed(title="Index", color=0xff0000)
+    embed.add_field(name='', value=query.capitalize()+': '+str(db[query] if db[query] else 0))
+    return embed

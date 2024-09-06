@@ -26,25 +26,13 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    if  '!leaderboard' in message.content.strip() and message.content.strip()[0] == '!': 
-        try: min = int(message.content[12:])
-        except: min = 0
-        await message.channel.send('```'+leaderboard.export(min)+'```')
-        return
     if  '!suggest' in message.content.strip() and message.content.strip()[0] == '!': 
         await suggest('566579790556037140', message.content[8:])
         return
     if  '!index' in message.content.strip() and message.content.strip()[0] == '!': 
         await message.channel.send('`'+message.content[6:].strip() +':\t' + str(await leaderboard.index(message.content[6:].strip()))+'`')
         return
-    if  '!reset' in message.content.strip() and message.content.strip()[0] == '!': 
-        if message.author == await client.fetch_user('566579790556037140'):
-            db[message.content.strip()[7:]] = 0
-            await message.channel.send('`'+message.content.strip()[7:] +' has been reset to 0!''`')
-        else:
-            await message.channel.send(f'`{message.author} has no admin permissions. BEGONE, HEATHEN!`')
-            discord.Embed
-        return
+    
 
     words:list = message.content.strip().split(' ')
 
@@ -69,5 +57,27 @@ async def suggest(user: str, content):
 async def leaderboard_command(interaction):
     embeds = leaderboard.export(1)
     await interaction.response.send_message(embed=embeds)
+
+@tree.command(
+    name="reset",
+    description="a debug command, currently available only to the creator."
+    )
+async def reset_command(interaction, target:str):
+    if interaction.user.id == 566579790556037140:
+        db[target] = 0
+        await interaction.response.send_message('`'+target +' has been reset to 0!''`')
+    else:
+        await interaction.response.send_message(f'`{interaction.user.capitalize()} has no admin permissions. BEGONE, HEATHEN!`')
+    return
+
+@tree.command(
+    name="index",
+    description="Displays the count for a requested value."
+    )
+async def index_command(interaction, index_value:str):
+    embeds = await leaderboard.index(index_value)
+    await interaction.response.send_message(embed=embeds)
+
+
 
 client.run(TOKEN)
